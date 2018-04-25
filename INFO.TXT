@@ -1,0 +1,56 @@
+ssh pi@<RASPBERRY-IP>
+<RASPBERRY-PASSWORD>
+
+# start vnc server
+tightvncserver
+
+# use vnc client
+<RASPBERRY-IP>:1
+<VNC-PASSWORD>
+
+# take a picture, USB web cam (1)
+fswebcam -r 1280x720 image1.jpg
+fswebcam -r 640x480 --no-banner image3.jpg
+
+# take picture pi camera (2)
+
+#webcam.sh
+#!/bin/bash
+DATE=$(date +"%Y-%m-%d_%H%M")
+fswebcam -r 1280x720 --no-banner /home/pi/webcam/$DATE.jpg
+chmod +x webcam.sh
+./webcam.sh
+
+# web server
+hostname -I
+http://localhost/
+
+#webcam.sh
+#!/bin/bash
+
+# -------------------------
+# get date and hour
+# -------------------------
+
+DATE=$(date +"%Y-%m-%d_%H%M")
+
+# -------------------------
+# take picture web cam
+# -------------------------
+
+#fswebcam -r 1280x720 image1.jpg
+#fswebcam -r 640x480 --no-banner /home/pi/webcam/$DATE.jpg
+#fswebcam -r 640x480 --no-banner image3.jpg
+
+#fswebcam -r 640x480 --no-banner /home/pi/webcam/$DATE.jpg
+fswebcam -r 640x480 --no-banner web-cam.jpg
+
+# -------------------------
+# take picture pi camera
+# -------------------------
+
+#raspistill -o pi-cam.png
+raspistill -o pi-cam.jpg
+
+#chmod +x webcam.sh
+#./webcam.sh
